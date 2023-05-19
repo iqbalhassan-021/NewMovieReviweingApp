@@ -1,0 +1,49 @@
+﻿@page "/demo"
+@using NewProject.Shared;
+@inject HttpClient Http
+
+
+<h3>CustomerForm</h3>
+
+
+
+
+    <form>
+        <label>Movie Name:</label>
+        <input  @bind="movie.movie_name" type="text" placeholder="enter movie name" style="text-align: center" />
+    </form>
+
+    <form>
+        <label>Movie Rating:</label>
+        <input @bind="movie.movie_rating" type="text" placeholder="Movie Rating" style="text-align: center" />
+    </form>
+    <form>
+        <label>Movie Description:</label>
+        <input @bind="movie.movie_Description" type="text" placeholder="Enter Address" style="text-align: center" />
+    </form>
+
+
+
+    <p>Movie Name: @movie.movie_name</p>
+    <p>Movie Rating: @movie.movie_rating</p>
+    <p>Movie Description: @movie.movie_Description</p>
+
+    <p>Messege: @mess</p>
+
+
+
+
+    
+
+@code {
+    Movie movie = new Movie();
+    public string mess = "";
+    private async void gotopage()
+    {
+
+        var res = await Http.PostAsJsonAsync<Movie>("api/MovieCont", movie);
+        mess = "Successfully";
+
+
+    }
+}

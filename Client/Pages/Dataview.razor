@@ -1,0 +1,49 @@
+﻿@page "/dataview"
+@using NewProject.Shared
+@inject HttpClient Http
+
+<PageTitle> Data View</PageTitle>
+
+<h1>Weather forecast</h1>
+
+<p>This component demonstrates fetching data from the server.</p>
+
+@if (customers == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Customer ID</th>
+                <th>Customer Name</th>
+                <th>Customer Address</th>
+                <th>Customer Phone Number</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var forecast in customers)
+            {
+                <tr>
+                    <td>@forecast.Customer_Id</td>
+                    <td>@forecast.Customer_Name</td>
+                    <td>@forecast.Customer_Address</td>
+                    <td>@forecast.Phone_Number</td>
+                   
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private Movie[]? customers;
+
+    protected override async Task OnInitializedAsync()
+    {
+        customers = await Http.GetFromJsonAsync<Movie[]>("api/Customers");
+    }
+}
